@@ -60,11 +60,7 @@ function install_rabbitmq {
 	# If rabbitmq $version >= 3.6.0
 	if [[ ${_semver//.} -ge '360' ]]; then
 		url=https://github.com/rabbitmq/rabbitmq-server/releases/download/$version/$os_prefix-$_semver.tar.xz
-		status=$(curl --write-out %{http_code} -L $url --output $tmp_download_dir/rabbitmq.tar.xz)
-		if [ $status -ne 200 ]; then
-			echo "ERROR: version ${version} is not available for download."
-			exit 1
-		fi
+		curl --write-out %{http_code} -fL $url --output $tmp_download_dir/rabbitmq.tar.xz
 		if command -v gpg; then
 			verify_package "${url}" "${tmp_download_dir}" "xz"
 		else
