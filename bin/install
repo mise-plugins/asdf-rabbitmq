@@ -46,6 +46,9 @@ function install_rabbitmq {
 		_semver=${_version#v}
 	elif [[ ${version} =~ "v".* ]]; then
 		_semver=${version#v}
+  elif [[ ${version} =~ ^[0-9]+\.[0-9]+\.[0-9]+(.*)?$ ]]; then
+    version="v${version}"
+    _semver=${version#v}
 	else
 		echo "ERROR: unsupported version format ${version}"
 		exit 1
